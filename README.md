@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="https://img.icons8.com/3d-fluency/94/book-and-pencil.png" alt="Book Icon" width="94"/>
-</p>
-
-<h1 align="center">How to Hire an AI — RAG Chatbot</h1>
+<h1 align="center">📖 How to Hire an AI — RAG Chatbot</h1>
 
 <p align="center">
   <em>Chatbot interactif alimenté par RAG (Retrieval-Augmented Generation) pour explorer le livre <br/>"How to Hire an AI" de Felix Craft & Nat Eliason.</em>
@@ -18,9 +14,9 @@
 
 ---
 
-## Comment ca marche ?
+## 💡 Comment ça marche ?
 
-L'utilisateur pose une question sur le livre. Le système recherche les passages les plus pertinents via similarity vectorielle, puis un LLM genere une reponse contextualisee en streaming.
+L'utilisateur pose une question sur le livre. Le système recherche les passages les plus pertinents via similarité vectorielle, puis un LLM génère une réponse contextualisée en streaming.
 
 ```
 Question utilisateur
@@ -32,21 +28,21 @@ Question utilisateur
                                                   LLM (Llama 3.3 via Groq)
                                                           |
                                                           v
-                                                   Reponse streamee
+                                                   Réponse streamée
 ```
 
-## Stack technique
+## 🏗️ Stack technique
 
-| Composant | Technologie | Role |
+| Composant | Technologie | Rôle |
 |-----------|------------|------|
 | **Frontend** | Next.js + Tailwind CSS | Interface chat responsive |
 | **Embeddings** | Gemini Embedding (text-embedding-001) | Vectorisation des chunks et des questions |
-| **LLM** | Llama 3.3 70B via Groq | Generation des reponses en streaming |
+| **LLM** | Llama 3.3 70B via Groq | Génération des réponses en streaming |
 | **Vector Store** | JSON statique + cosine similarity | Recherche des passages pertinents |
 | **Rate Limiting** | Upstash Redis | Protection contre l'abus (20 req/h par IP) |
-| **Hosting** | Vercel | Deploiement serverless |
+| **Hosting** | Vercel | Déploiement serverless |
 
-## Architecture du projet
+## 📂 Architecture du projet
 
 ```
 RAG_LecTech/
@@ -56,20 +52,20 @@ RAG_LecTech/
     app/
       api/chat/route.ts    # API : embed question + similarity + Groq streaming
       page.tsx              # Interface chat
-      layout.tsx            # Layout + meta OG pour LinkedIn
+      layout.tsx            # Layout + méta OG pour LinkedIn
     lib/
       embeddings.ts         # Cosine similarity + chargement des chunks
   public/
-    embeddings.json         # Chunks pre-calcules (gitignored)
+    embeddings.json         # Chunks pré-calculés (gitignored)
 ```
 
-## Lancement local
+## 🚀 Lancement local
 
-### 1. Prerequis
+### 1. Prérequis
 
 - Node.js 18+
-- Python 3.10+ (pour generer les embeddings)
-- Cles API gratuites : [Groq](https://console.groq.com), [Google AI Studio](https://aistudio.google.com), [Upstash](https://console.upstash.com)
+- Python 3.10+ (pour générer les embeddings)
+- Clés API gratuites : [Groq](https://console.groq.com), [Google AI Studio](https://aistudio.google.com), [Upstash](https://console.upstash.com)
 
 ### 2. Installation
 
@@ -78,14 +74,14 @@ git clone https://github.com/bastaga15/RAG_LecTech.git
 cd RAG_LecTech
 npm install
 cp .env.example .env
-# Remplir les cles API dans .env
+# Remplir les clés API dans .env
 ```
 
-### 3. Generer les embeddings
+### 3. Générer les embeddings
 
 ```bash
 pip install pymupdf google-genai
-# Placer le PDF "How-to-Hire-an-AI.pdf" a la racine du projet parent
+# Placer le PDF "How-to-Hire-an-AI.pdf" à la racine du projet parent
 python scripts/build-embeddings.py
 ```
 
@@ -96,25 +92,25 @@ npm run dev
 # Ouvrir http://localhost:3000
 ```
 
-## Securite
+## 🔒 Sécurité
 
-- **Rate limiting** : 20 requetes/heure par IP via Upstash Redis
-- **Anti prompt injection** : System prompt renforce avec regles strictes
+- **Rate limiting** : 20 requêtes/heure par IP via Upstash Redis
+- **Anti prompt injection** : System prompt renforcé avec règles strictes
 - **Security headers** : X-Content-Type-Options, X-Frame-Options, Referrer-Policy
 - **Timeouts** : 10s sur les appels API externes
-- **Aucune cle API exposee** : `.env` gitignored, aucun secret dans l'historique Git
-- **Contenu du livre protege** : `embeddings.json` gitignored (non distribue)
+- **Aucune clé API exposée** : `.env` gitignored, aucun secret dans l'historique Git
+- **Contenu du livre protégé** : `embeddings.json` gitignored (non distribué)
 
-## Cout
+## 💰 Coût
 
-**$0** — Entierement gratuit grace aux free tiers :
+**$0** — Entièrement gratuit grâce aux free tiers :
 - Groq : 30 req/min (Llama 3.3 70B)
-- Google AI Studio : 1500 req/min (Gemini Embedding)
+- Google AI Studio : 1 500 req/min (Gemini Embedding)
 - Upstash Redis : 10K req/jour
 - Vercel : 100K req/mois
 
 ---
 
 <p align="center">
-  <strong>Projet realise par <a href="https://lectech.fr">Bastien LECHAT — LecTech</a></strong>
+  <strong>Projet réalisé par <a href="https://lectech.fr">Bastien LECHAT — LecTech</a></strong>
 </p>
