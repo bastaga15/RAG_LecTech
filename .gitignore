@@ -3,4 +3,3 @@ node_modules/
 .env
 *.pyc
 __pycache__/
-public/embeddings.json
