@@ -12,19 +12,19 @@ interface EmbeddingPoint {
 }
 
 const CHAPTER_COLORS: Record<string, string> = {
-  "Introduction": "#6366f1",
-  "Ch.1": "#8b5cf6",
-  "Ch.2": "#a78bfa",
-  "Ch.3": "#f59e0b",
-  "Ch.4": "#10b981",
-  "Ch.5": "#06b6d4",
-  "Ch.6": "#f43f5e",
-  "Ch.7": "#ec4899",
-  "Ch.8": "#14b8a6",
-  "Ch.9": "#f97316",
-  "Ch.10": "#84cc16",
-  "Ch.11": "#e879f9",
-  "Ch.12": "#22d3ee",
+  "Introduction": "#ffffff",
+  "Ch.1": "#facc15",
+  "Ch.2": "#f97316",
+  "Ch.3": "#ef4444",
+  "Ch.4": "#22c55e",
+  "Ch.5": "#166534",
+  "Ch.6": "#3b82f6",
+  "Ch.7": "#1e3a8a",
+  "Ch.8": "#a855f7",
+  "Ch.9": "#92400e",
+  "Ch.10": "#9ca3af",
+  "Ch.11": "#06b6d4",
+  "Ch.12": "#f472b6",
 };
 
 function getChapterColor(chapter: string): string {
@@ -79,7 +79,7 @@ export default function VizPage() {
               Carte des embeddings — &quot;How to Hire an AI&quot;
             </h1>
             <p className="mt-1 text-sm text-gray-400">
-              64 passages du PDF projetés en 2D par PCA (768 dimensions → 2D) — Les passages proches dans l&apos;espace vectoriel traitent de sujets similaires
+              64 passages du PDF projetés en 2D (768dim → 2D) — Les passages proches dans l&apos;espace vectoriel traitent de sujets similaires
             </p>
           </div>
         </div>

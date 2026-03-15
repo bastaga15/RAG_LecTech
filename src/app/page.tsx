@@ -25,19 +25,19 @@ const SUGGESTIONS = [
 ];
 
 const CHAPTER_COLORS: Record<string, string> = {
-  "Introduction": "#6366f1",
-  "Ch.1": "#8b5cf6",
-  "Ch.2": "#a78bfa",
-  "Ch.3": "#f59e0b",
-  "Ch.4": "#10b981",
-  "Ch.5": "#06b6d4",
-  "Ch.6": "#f43f5e",
-  "Ch.7": "#ec4899",
-  "Ch.8": "#14b8a6",
-  "Ch.9": "#f97316",
-  "Ch.10": "#84cc16",
-  "Ch.11": "#e879f9",
-  "Ch.12": "#22d3ee",
+  "Introduction": "#ffffff",
+  "Ch.1": "#facc15",
+  "Ch.2": "#f97316",
+  "Ch.3": "#ef4444",
+  "Ch.4": "#22c55e",
+  "Ch.5": "#166534",
+  "Ch.6": "#3b82f6",
+  "Ch.7": "#1e3a8a",
+  "Ch.8": "#a855f7",
+  "Ch.9": "#92400e",
+  "Ch.10": "#9ca3af",
+  "Ch.11": "#06b6d4",
+  "Ch.12": "#f472b6",
 };
 
 function getChapterColor(chapter: string): string {
@@ -84,7 +84,7 @@ function EmbeddingViz() {
         <div className="mt-2 rounded-xl border border-gray-700 bg-gray-900 p-4">
           <p className="mb-3 text-xs text-gray-500">
             Chaque point = un passage du PDF. Les couleurs = les chapitres.
-            Projection PCA 2D des vecteurs d&apos;embedding (768 dim → 2D).
+            Projection en 2D des vecteurs d&apos;embeddings (les données) (768dim → 2D).
           </p>
 
           <div className="relative mx-auto" style={{ width: "100%", paddingBottom: "60%" }}>
