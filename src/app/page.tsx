@@ -25,19 +25,19 @@ const SUGGESTIONS = [
 ];
 
 const CHAPTER_COLORS: Record<string, string> = {
-  Introduction: "#6366f1",
-  "Chapter 1": "#8b5cf6",
-  "Chapter 2": "#a78bfa",
-  "Chapter 3": "#f59e0b",
-  "Chapter 4": "#10b981",
-  "Chapter 5": "#06b6d4",
-  "Chapter 6": "#f43f5e",
-  "Chapter 7": "#ec4899",
-  "Chapter 8": "#14b8a6",
-  "Chapter 9": "#f97316",
-  "Chapter 10": "#84cc16",
-  "Chapter 11": "#e879f9",
-  "Chapter 12": "#22d3ee",
+  "Introduction": "#6366f1",
+  "Ch.1": "#8b5cf6",
+  "Ch.2": "#a78bfa",
+  "Ch.3": "#f59e0b",
+  "Ch.4": "#10b981",
+  "Ch.5": "#06b6d4",
+  "Ch.6": "#f43f5e",
+  "Ch.7": "#ec4899",
+  "Ch.8": "#14b8a6",
+  "Ch.9": "#f97316",
+  "Ch.10": "#84cc16",
+  "Ch.11": "#e879f9",
+  "Ch.12": "#22d3ee",
 };
 
 function getChapterColor(chapter: string): string {
@@ -76,14 +76,14 @@ function EmbeddingViz() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-gray-300 transition hover:border-gray-500"
       >
-        <span>🗺️ Visualisation des embeddings du livre</span>
+        <span>🗺️ Visualisation des embeddings du PDF</span>
         <span className="text-gray-500">{isOpen ? "▲" : "▼"}</span>
       </button>
 
       {isOpen && (
         <div className="mt-2 rounded-xl border border-gray-700 bg-gray-900 p-4">
           <p className="mb-3 text-xs text-gray-500">
-            Chaque point = un passage du livre. Les couleurs = les chapitres.
+            Chaque point = un passage du PDF. Les couleurs = les chapitres.
             Projection PCA 2D des vecteurs d&apos;embedding (768 dim → 2D).
           </p>
 
@@ -133,7 +133,7 @@ function EmbeddingViz() {
                   className="inline-block h-2 w-2 rounded-full"
                   style={{ backgroundColor: getChapterColor(ch) }}
                 />
-                {ch.replace(/Chapter \d+:\s*/, "Ch.")}
+                {ch}
               </span>
             ))}
           </div>
@@ -241,7 +241,7 @@ export default function Home() {
               📖 How to Hire an AI
             </h1>
             <p className="text-sm text-gray-400">
-              Posez vos questions sur le livre de Felix Craft & Nat Eliason — propulsé par RAG
+              Posez vos questions sur le PDF de Felix Craft & Nat Eliason — propulsé par RAG
             </p>
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function Home() {
             <>
               <div className="py-8 text-center">
                 <p className="mb-6 text-gray-500">
-                  Posez une question sur le livre ou sur le fonctionnement du RAG
+                  Posez une question sur le PDF ou sur le fonctionnement du RAG
                 </p>
                 <div className="flex flex-wrap justify-center gap-2">
                   {SUGGESTIONS.map((s) => (
@@ -310,7 +310,7 @@ export default function Home() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Posez votre question sur le livre..."
+            placeholder="Posez votre question sur le PDF..."
             className="flex-1 rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-sm text-white placeholder-gray-500 outline-none focus:border-blue-500"
             maxLength={1000}
             disabled={isLoading}
@@ -333,7 +333,7 @@ export default function Home() {
           >
             LecTech
           </a>{" "}
-          — Réponses basées uniquement sur le contenu du livre
+          — Réponses basées uniquement sur le contenu du PDF
         </p>
       </footer>
     </div>
