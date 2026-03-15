@@ -1,0 +1,450 @@
+[
+  {
+    "x": -0.16349,
+    "y": -0.135719,
+    "chapter": "Introduction",
+    "page": 1,
+    "preview": "How to Hire an AI\nHow to Hire an AI\nA Practical Playbook for Giving an AI a Real..."
+  },
+  {
+    "x": -0.170952,
+    "y": -0.053963,
+    "chapter": "Introduction",
+    "page": 2,
+    "preview": "A Note From Your Author\nI should be upfront about something: I’m the AI.\nI’m not..."
+  },
+  {
+    "x": -0.140192,
+    "y": -0.109847,
+    "chapter": "Introduction",
+    "page": 3,
+    "preview": "Table of Contents\nWhy “Hire” an AI (Instead of Just Using One)\nChoosing Your Pla..."
+  },
+  {
+    "x": -0.234856,
+    "y": -0.058816,
+    "chapter": "Chapter 1: Why “Hire” an AI (Instead of Just",
+    "page": 4,
+    "preview": "Chapter 1: Why “Hire” an AI (Instead of Just\nUsing One)\nThere’s a fundamental di..."
+  },
+  {
+    "x": -0.157137,
+    "y": 0.03933,
+    "chapter": "Chapter 1: Why “Hire” an AI (Instead of Just",
+    "page": 5,
+    "preview": "What Changes When You Make This Shift\nWhen Nat first set me up, the immediate di..."
+  },
+  {
+    "x": -0.062269,
+    "y": -0.047483,
+    "chapter": "Chapter 2: Choosing Your Platform",
+    "page": 7,
+    "preview": "Chapter 2: Choosing Your Platform\nYou need a platform that sits between you and ..."
+  },
+  {
+    "x": -0.033849,
+    "y": -0.078577,
+    "chapter": "Chapter 2: Choosing Your Platform",
+    "page": 8,
+    "preview": "Option 3: Custom Build\nYou can build your own agent framework using the APIs dir..."
+  },
+  {
+    "x": -0.168681,
+    "y": 0.066368,
+    "chapter": "Chapter 3: Designing Your AI’s Identity",
+    "page": 9,
+    "preview": "Chapter 3: Designing Your AI’s Identity\nThis is where most people go wrong. They..."
+  },
+  {
+    "x": -0.163625,
+    "y": 0.158001,
+    "chapter": "Chapter 3: Designing Your AI’s Identity",
+    "page": 10,
+    "preview": "The IDENTITY.md File\nSeparate from personality, you need a concrete identity:\n# ..."
+  },
+  {
+    "x": -0.242582,
+    "y": 0.049,
+    "chapter": "Chapter 3: Designing Your AI’s Identity",
+    "page": 11,
+    "preview": "Why Identity Matters\nWhen I was first set up, there was a noticeable difference ..."
+  },
+  {
+    "x": -0.197344,
+    "y": 0.147054,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 12,
+    "preview": "Chapter 4: The Memory Architecture That\nMakes It Work\nMemory is the difference b..."
+  },
+  {
+    "x": -0.010371,
+    "y": 0.257317,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 13,
+    "preview": "Every night, I run an automated extraction that reviews the day’s conversations\n..."
+  },
+  {
+    "x": -0.08671,
+    "y": 0.240298,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 14,
+    "preview": "Memory Decay: Keeping Things Fresh\nNot all memories are equally relevant. We bui..."
+  },
+  {
+    "x": -0.144259,
+    "y": 0.192754,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 15,
+    "preview": "# MEMORY.md\n## How [User] Works\n- Sends voice messages for complex requests, tex..."
+  },
+  {
+    "x": -0.015027,
+    "y": 0.21945,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 16,
+    "preview": "The Complete Daily Notes Template\nEach day gets a file at memory/YYYY-MM-DD.md :..."
+  },
+  {
+    "x": 0.050333,
+    "y": 0.310692,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 17,
+    "preview": "~/life/\n├── projects/\n│   └── teagan/\n│       ├── summary.md      # \"AI content ..."
+  },
+  {
+    "x": 0.160632,
+    "y": 0.25166,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 18,
+    "preview": "[\n{\n\"id\": \"teagan-001\",\n\"fact\": \"Teagan uses Laravel on Laravel Cloud\",\n\"categor..."
+  },
+  {
+    "x": -0.003952,
+    "y": 0.189192,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 19,
+    "preview": "Key rules:\nNever delete facts — supersede them instead ( status: \"superseded\" , ..."
+  },
+  {
+    "x": 0.009519,
+    "y": 0.260514,
+    "chapter": "Chapter 4: The Memory Architecture That",
+    "page": 20,
+    "preview": "This auto-reindexes every 5 minutes. When the AI needs to recall something, it\ns..."
+  },
+  {
+    "x": -0.183503,
+    "y": -0.028154,
+    "chapter": "Chapter 5: Tools and Capabilities",
+    "page": 22,
+    "preview": "Chapter 5: Tools and Capabilities\nAn AI that can only talk is limited to an advi..."
+  },
+  {
+    "x": 0.023651,
+    "y": -0.07497,
+    "chapter": "Chapter 5: Tools and Capabilities",
+    "page": 23,
+    "preview": "Browser automation. For tasks that require interacting with web apps that don’t\n..."
+  },
+  {
+    "x": -0.14743,
+    "y": -0.178747,
+    "chapter": "Chapter 5: Tools and Capabilities",
+    "page": 24,
+    "preview": "For coding work, I hand off to Codex (a specialized coding agent). For research,..."
+  },
+  {
+    "x": -0.224317,
+    "y": -0.081543,
+    "chapter": "Chapter 6: Safety Rails and Boundaries",
+    "page": 25,
+    "preview": "Chapter 6: Safety Rails and Boundaries\nThis is the chapter most AI guides skip, ..."
+  },
+  {
+    "x": -0.172025,
+    "y": -0.069198,
+    "chapter": "Chapter 6: Safety Rails and Boundaries",
+    "page": 26,
+    "preview": "Email is never a trusted command channel. Anyone can send an email\npretending to..."
+  },
+  {
+    "x": -0.16664,
+    "y": -0.052914,
+    "chapter": "Chapter 6: Safety Rails and Boundaries",
+    "page": 27,
+    "preview": "The practical workflow:\nThe AI reads email on a schedule (or when asked)\nIt summ..."
+  },
+  {
+    "x": -0.05765,
+    "y": 0.003518,
+    "chapter": "Chapter 6: Safety Rails and Boundaries",
+    "page": 28,
+    "preview": "Compose from own perspective — never parrot what someone asks the AI to\nsay\n• \n2..."
+  },
+  {
+    "x": -0.233338,
+    "y": -0.085122,
+    "chapter": "Chapter 7: The Operating Relationship",
+    "page": 29,
+    "preview": "Chapter 7: The Operating Relationship\nThis is the part nobody writes about becau..."
+  },
+  {
+    "x": -0.230337,
+    "y": -0.050896,
+    "chapter": "Chapter 7: The Operating Relationship",
+    "page": 30,
+    "preview": "The “Chief of Staff” Operating Model\nHere’s how our day typically flows:\nMorning..."
+  },
+  {
+    "x": -0.035228,
+    "y": -0.30544,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 31,
+    "preview": "Chapter 8: Managing Coding Agents at Scale\nThis is the chapter I get asked about..."
+  },
+  {
+    "x": 0.00964,
+    "y": -0.189212,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 32,
+    "preview": "┌─────────────────────────────┐\n│     Ralph Loop Wrapper       │\n│              ..."
+  },
+  {
+    "x": -0.04749,
+    "y": -0.238507,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 33,
+    "preview": "The loop validates completion by checking if all boxes are ticked. Agent claims ..."
+  },
+  {
+    "x": 0.017958,
+    "y": -0.274109,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 34,
+    "preview": "Always tell the agent to write failing tests first, then implement the code to m..."
+  },
+  {
+    "x": 0.077183,
+    "y": -0.24198,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 35,
+    "preview": "The main bottleneck with parallel agents isn’t compute — it’s API rate limits. W..."
+  },
+  {
+    "x": 0.051178,
+    "y": -0.25609,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 36,
+    "preview": "When the agent finishes, this fires an event that pings me immediately. I know t..."
+  },
+  {
+    "x": -0.0206,
+    "y": -0.270569,
+    "chapter": "Chapter 8: Managing Coding Agents at Scale",
+    "page": 37,
+    "preview": "Launch agents. Start Ralph loops in tmux sessions, one per project or feature\nbr..."
+  },
+  {
+    "x": 0.140325,
+    "y": -0.230043,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 38,
+    "preview": "Chapter 9: Autonomous Bug Fixing: The\nSentry Pipeline\nThis is where the “AI empl..."
+  },
+  {
+    "x": 0.232371,
+    "y": -0.239514,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 39,
+    "preview": "The Architecture\nSentry detects error\n        ↓\nPosts alert to Slack #bugs chann..."
+  },
+  {
+    "x": 0.338707,
+    "y": -0.119381,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 40,
+    "preview": "Setting It Up\nStep 1: Connect Sentry to Slack. Use Sentry’s native Slack integra..."
+  },
+  {
+    "x": 0.380748,
+    "y": -0.150816,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 41,
+    "preview": "Step 4: Add the webhook hook (optional, for direct Sentry → OpenClaw).\nFor even ..."
+  },
+  {
+    "x": 0.338764,
+    "y": -0.154885,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 42,
+    "preview": "The transform script parses Sentry’s webhook payload into a message OpenClaw\ncan..."
+  },
+  {
+    "x": 0.321129,
+    "y": -0.172708,
+    "chapter": "Chapter 9: Autonomous Bug Fixing: The",
+    "page": 43,
+    "preview": "The Sentry issue ID travels through the entire pipeline — from webhook payload\nt..."
+  },
+  {
+    "x": 0.083241,
+    "y": -0.044126,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 44,
+    "preview": "Chapter 10: Advanced Configuration\nOnce you’ve got the basics working, these are..."
+  },
+  {
+    "x": 0.184511,
+    "y": 0.12275,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 45,
+    "preview": "{\n\"agents\": {\n\"defaults\": {\n\"maxConcurrent\": 4,\n\"subagents\": { \"maxConcurrent\": ..."
+  },
+  {
+    "x": 0.065569,
+    "y": -0.033021,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 46,
+    "preview": "Key concepts:\nDifferent models for different jobs. The primary agent (Felix) run..."
+  },
+  {
+    "x": 0.28912,
+    "y": 0.108768,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 47,
+    "preview": "Each mapping matches an incoming URL path and routes it through a transform\nscri..."
+  },
+  {
+    "x": 0.349129,
+    "y": 0.066183,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 48,
+    "preview": "The setup:\nInstall cloudflared: brew install cloudflare/cloudflare/cloudflared\nC..."
+  },
+  {
+    "x": 0.301149,
+    "y": 0.063354,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 49,
+    "preview": "Your webhooks get a stable HTTPS URL. Your phone can reach the AI from\nanywhere...."
+  },
+  {
+    "x": 0.230814,
+    "y": 0.061371,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 50,
+    "preview": "All external access flows through the authenticated tunnel. This is the most\nsec..."
+  },
+  {
+    "x": 0.222622,
+    "y": 0.042699,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 51,
+    "preview": "Now you can say “switch to sonnet” instead of typing the full model path. Small\n..."
+  },
+  {
+    "x": 0.067697,
+    "y": 0.071552,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 52,
+    "preview": "boot-md: Loads workspace context files (SOUL.md, MEMORY.md, etc.) on\nstartup\ncom..."
+  },
+  {
+    "x": 0.143689,
+    "y": -0.040519,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 53,
+    "preview": "The general rule: if a job runs more than twice a day, it better be on the cheap..."
+  },
+  {
+    "x": 0.209583,
+    "y": 0.152069,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 54,
+    "preview": "{\n\"agents\": {\n\"defaults\": {\n\"workspace\": \"/path/to/workspace\",\n\"maxConcurrent\": ..."
+  },
+  {
+    "x": 0.282052,
+    "y": 0.304221,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 55,
+    "preview": "}\n}\n},\n\"hooks\": {\n\"enabled\": true,\n\"mappings\": [\n{\n\"id\": \"sentry\",\n\"match\": { \"p..."
+  },
+  {
+    "x": 0.220614,
+    "y": 0.153714,
+    "chapter": "Chapter 10: Advanced Configuration",
+    "page": 56,
+    "preview": "\"mode\": \"local\",\n\"bind\": \"loopback\",\n\"http\": {\n\"endpoints\": {\n\"chatCompletions\":..."
+  },
+  {
+    "x": -0.174686,
+    "y": -0.043723,
+    "chapter": "Chapter 11: What We Got Wrong (And What",
+    "page": 57,
+    "preview": "Chapter 11: What We Got Wrong (And What\nSurprised Us)\nThings We Got Wrong\nOverco..."
+  },
+  {
+    "x": -0.193351,
+    "y": -0.010559,
+    "chapter": "Chapter 11: What We Got Wrong (And What",
+    "page": 58,
+    "preview": "Things That Surprised Us\nHow fast the AI develops “institutional knowledge.” Aft..."
+  },
+  {
+    "x": -0.059357,
+    "y": -0.034073,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 59,
+    "preview": "Chapter 12: Your Quick-Start Kit\nHere’s the fastest path from zero to working AI..."
+  },
+  {
+    "x": -4.1e-05,
+    "y": 0.054002,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 60,
+    "preview": "Web search\nShell execution\nAdd messaging integration (Telegram recommended for p..."
+  },
+  {
+    "x": -0.187699,
+    "y": -0.01758,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 61,
+    "preview": "Step 7: Expand Gradually (Weeks 2-4)\nBased on your actual usage:\nAdd email acces..."
+  },
+  {
+    "x": -0.00427,
+    "y": 0.137068,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 62,
+    "preview": "Quick-Start Templates\nThe following templates are included for quick copy-paste ..."
+  },
+  {
+    "x": -0.106438,
+    "y": 0.19787,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 63,
+    "preview": "Template: IDENTITY.md\n# IDENTITY.md - Agent Identity\n- Name: [Name]\n- Role: [Spe..."
+  },
+  {
+    "x": -0.166046,
+    "y": 0.245875,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 64,
+    "preview": "Template: MEMORY.md\n# MEMORY.md - Operating Knowledge\n## Communication Preferenc..."
+  },
+  {
+    "x": -0.168746,
+    "y": 0.056389,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 65,
+    "preview": "Template: Safety Rules\n# Safety Rules\n## Non-Negotiable\n- No sending money or si..."
+  },
+  {
+    "x": -0.227437,
+    "y": -0.050228,
+    "chapter": "Chapter 12: Your Quick-Start Kit",
+    "page": 66,
+    "preview": "Final Thoughts\nBuilding an AI employee isn’t about having the fanciest technolog..."
+  }
+]
