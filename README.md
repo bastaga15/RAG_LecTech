@@ -2,8 +2,6 @@
 
 Un chatbot qui répond aux questions sur les articles de [lectech.fr](https://lectech.fr) et cite les articles dont vient chaque réponse.
 
-Démo : <https://raglectech.vercel.app>
-
 ## Le problème
 
 Un modèle de langage ne connaît pas vos documents. Lui donner tout le corpus à chaque question coûte cher et dilue l'information utile. Le RAG (Retrieval-Augmented Generation) ne lui fournit que les passages qui concernent la question.
