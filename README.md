@@ -1,116 +1,82 @@
-<h1 align="center">📖 How to Hire an AI — RAG Chatbot</h1>
+# RAG_LecTech
 
-<p align="center">
-  <em>Chatbot interactif alimenté par RAG (Retrieval-Augmented Generation) pour explorer le livre <br/>"How to Hire an AI" de Felix Craft & Nat Eliason.</em>
-</p>
+Un chatbot qui répond aux questions sur les articles de [lectech.fr](https://lectech.fr) et cite les articles dont vient chaque réponse.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
-  <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq" />
-  <img src="https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white" alt="Gemini" />
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
-</p>
+Démo : <https://raglectech.vercel.app>
 
----
+## Le problème
 
-## 💡 Comment ça marche ?
+Un modèle de langage ne connaît pas vos documents. Lui donner tout le corpus à chaque question coûte cher et dilue l'information utile. Le RAG (Retrieval-Augmented Generation) ne lui fournit que les passages qui concernent la question.
 
-L'utilisateur pose une question sur le livre. Le système recherche les passages les plus pertinents via similarité vectorielle, puis un LLM génère une réponse contextualisée en streaming.
+Ce dépôt en est une implémentation volontairement courte, sans base vectorielle ni framework : environ 600 lignes, lisibles en une demi-heure.
 
-```
-Question utilisateur
-       |
-       v
-  Embedding (Gemini)  --->  Cosine Similarity  --->  Top 5 chunks
-                                                          |
-                                                          v
-                                                  LLM (Llama 3.3 via Groq)
-                                                          |
-                                                          v
-                                                   Réponse streamée
-```
+## Fonctionnement
 
-## 🏗️ Stack technique
-
-| Composant | Technologie | Rôle |
-|-----------|------------|------|
-| **Frontend** | Next.js + Tailwind CSS | Interface chat responsive |
-| **Embeddings** | Gemini Embedding (text-embedding-001) | Vectorisation des chunks et des questions |
-| **LLM** | Llama 3.3 70B via Groq | Génération des réponses en streaming |
-| **Vector Store** | JSON statique + cosine similarity | Recherche des passages pertinents |
-| **Rate Limiting** | Upstash Redis | Protection contre l'abus (20 req/h par IP) |
-| **Hosting** | Vercel | Déploiement serverless |
-
-## 📂 Architecture du projet
+1. `scripts/build-embeddings.py` découpe les 23 articles en 50 passages et calcule leur embedding avec Gemini.
+2. À chaque question, l'API calcule l'embedding de la question et retient les 5 passages les plus proches par similarité cosinus.
+3. Ces passages sont fournis à Llama 3.3 (via Groq), qui rédige la réponse en streaming.
+4. L'interface affiche la réponse et les articles consultés, avec un lien vers chacun.
 
 ```
-RAG_LecTech/
-  scripts/
-    build-embeddings.py    # Parse le PDF, chunk, embed, sauve en JSON
-  src/
-    app/
-      api/chat/route.ts    # API : embed question + similarity + Groq streaming
-      page.tsx              # Interface chat
-      layout.tsx            # Layout + méta OG pour LinkedIn
-    lib/
-      embeddings.ts         # Cosine similarity + chargement des chunks
-  public/
-    embeddings.json         # Chunks pré-calculés (gitignored)
+question ──> embedding ──> similarité cosinus ──> 5 passages ──> LLM ──> réponse + sources
+                                  ▲
+                 data/embeddings.json (calculé une fois)
 ```
 
-## 🚀 Lancement local
+| Rôle | Choix | Raison |
+|---|---|---|
+| Embeddings | Gemini `gemini-embedding-001`, 3 072 dimensions | Palier gratuit suffisant |
+| Recherche | Similarité cosinus sur un fichier JSON | 50 passages : une base vectorielle serait superflue |
+| Génération | Llama 3.3 70B via Groq | Rapide, palier gratuit |
+| Limitation de débit | Upstash Redis, 20 requêtes par heure et par IP | Protège les quotas |
+| Interface et API | Next.js, Tailwind CSS | Un seul déploiement |
 
-### 1. Prérequis
+La page `/viz` affiche la projection en deux dimensions des 50 passages.
 
-- Node.js 18+
-- Python 3.10+ (pour générer les embeddings)
-- Clés API gratuites : [Groq](https://console.groq.com), [Google AI Studio](https://aistudio.google.com), [Upstash](https://console.upstash.com)
+## Installation
 
-### 2. Installation
+Prérequis : Node.js 20 ou plus. Python 3.10 ou plus seulement pour recalculer l'index.
 
 ```bash
 git clone https://github.com/bastaga15/RAG_LecTech.git
 cd RAG_LecTech
 npm install
-cp .env.example .env
-# Remplir les clés API dans .env
+cp .env.example .env   # puis renseigner les clés
+npm run dev
 ```
 
-### 3. Générer les embeddings
+Clés à créer, toutes disponibles en palier gratuit : [Groq](https://console.groq.com), [Google AI Studio](https://aistudio.google.com), [Upstash](https://console.upstash.com). Sans les deux variables Upstash, la limitation de débit est simplement désactivée.
+
+L'index est versionné, il n'y a donc rien à calculer pour lancer le projet. Pour l'adapter à un autre corpus, remplacez les fichiers de `content/articles/` puis :
 
 ```bash
-pip install pymupdf google-genai
-# Placer le PDF "How-to-Hire-an-AI.pdf" à la racine du projet parent
+pip install -r scripts/requirements.txt
 python scripts/build-embeddings.py
 ```
 
-### 4. Lancer
+## Structure
 
-```bash
-npm run dev
-# Ouvrir http://localhost:3000
+```
+content/articles/        Les 23 articles, en Markdown
+data/embeddings.json     Passages et embeddings, lus par l'API
+public/embeddings-map.json  Projection 2D pour la carte
+scripts/build-embeddings.py
+src/app/api/chat/route.ts   Recherche, appel au LLM, streaming
+src/app/page.tsx            Interface de chat
+src/app/viz/page.tsx        Carte des passages
+src/components/EmbeddingMap.tsx
+src/lib/embeddings.ts       Similarité cosinus
 ```
 
-## 🔒 Sécurité
+## Limites connues
 
-- **Rate limiting** : 20 requêtes/heure par IP via Upstash Redis
-- **Anti prompt injection** : System prompt renforcé avec règles strictes
-- **Security headers** : X-Content-Type-Options, X-Frame-Options, Referrer-Policy
-- **Timeouts** : 10s sur les appels API externes
-- **Aucune clé API exposée** : `.env` gitignored, aucun secret dans l'historique Git
-- **Contenu du livre protégé** : `embeddings.json` gitignored (non distribué)
+- La recherche parcourt tous les passages à chaque question. C'est adapté à quelques centaines de passages, pas à des dizaines de milliers.
+- Le découpage suit les paragraphes sans tenir compte du sens. Un passage peut couper un raisonnement en deux.
+- Aucune évaluation automatique de la qualité des réponses.
+- Le chatbot n'a pas de mémoire : chaque question est traitée seule.
 
-## 💰 Coût
+## Licence
 
-**$0** — Entièrement gratuit grâce aux free tiers :
-- Groq : 30 req/min (Llama 3.3 70B)
-- Google AI Studio : 1 500 req/min (Gemini Embedding)
-- Upstash Redis : 10K req/jour
-- Vercel : 100K req/mois
+Le code est sous licence MIT (voir `LICENSE`). Les articles de `content/articles/` restent la propriété de leur auteur et ne sont pas couverts par cette licence.
 
----
-
-<p align="center">
-  <strong>Projet réalisé par <a href="https://lectech.fr">Bastien LECHAT — LecTech</a></strong>
-</p>
+Bastien Lechat, [LecTech](https://lectech.fr)

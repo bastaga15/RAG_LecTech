@@ -1,19 +1,9 @@
 export interface Chunk {
+  slug: string;
+  title: string;
+  date: string;
   text: string;
   embedding: number[];
-  page: number;
-  chapter: string;
-}
-
-let cachedChunks: Chunk[] | null = null;
-
-export async function loadChunks(): Promise<Chunk[]> {
-  if (cachedChunks) return cachedChunks;
-  const res = await fetch(
-    new URL("../../public/embeddings.json", import.meta.url)
-  );
-  cachedChunks = (await res.json()) as Chunk[];
-  return cachedChunks;
 }
 
 export function cosineSimilarity(a: number[], b: number[]): number {

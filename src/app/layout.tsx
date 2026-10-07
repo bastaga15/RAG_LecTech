@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "How to Hire an AI — Interactive Q&A",
+  title: "Interroger les articles LecTech (démo RAG)",
   description:
-    "Ask questions about the book 'How to Hire an AI' by Felix Craft & Nat Eliason. Powered by RAG.",
+    "Posez une question sur les articles publiés par LecTech. Les réponses citent les articles dont elles viennent.",
   openGraph: {
-    title: "How to Hire an AI — Interactive Q&A",
+    title: "Interroger les articles LecTech (démo RAG)",
     description:
-      "Explore the practical playbook for giving an AI a real job. Ask any question about the book!",
+      "Démo de RAG : recherche par similarité dans les articles de lectech.fr, réponse générée avec ses sources.",
     type: "website",
   },
 };
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body className="bg-gray-950 text-gray-100 antialiased">{children}</body>
     </html>
   );

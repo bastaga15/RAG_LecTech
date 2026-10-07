@@ -1,156 +1,127 @@
 """
-Parse the PDF, chunk it, embed with Gemini Embedding, and save to JSON.
+Découpe les articles Markdown, calcule leurs embeddings avec Gemini et écrit
+data/embeddings.json (utilisé par l'API) et public/embeddings-map.json (carte).
 
-Usage:
-  pip install pymupdf google-genai
-  export GOOGLE_AI_API_KEY=your_key
+Usage :
+  pip install -r scripts/requirements.txt
+  export GOOGLE_AI_API_KEY=...
   python scripts/build-embeddings.py
 """
 
 import json
 import os
+import re
 import sys
 import time
-import re
-import fitz  # PyMuPDF
+from pathlib import Path
+
+import numpy as np
 from google import genai
+from sklearn.decomposition import PCA
 
-PDF_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "How-to-Hire-an-AI.pdf")
-OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "public", "embeddings.json")
+ROOT = Path(__file__).resolve().parent.parent
+ARTICLES_DIR = ROOT / "content" / "articles"
+OUTPUT = ROOT / "data" / "embeddings.json"
+OUTPUT_2D = ROOT / "public" / "embeddings-map.json"
 
-CHUNK_SIZE = 1500  # chars (~375 tokens)
-CHUNK_OVERLAP = 200  # chars overlap
+CHUNK_SIZE = 1200  # caractères, soit environ 300 tokens
 EMBEDDING_MODEL = "gemini-embedding-001"
+BATCH_SIZE = 20
 
 
-def extract_text_by_page(pdf_path: str) -> list[dict]:
-    """Extract text from each page with chapter detection."""
-    doc = fitz.open(pdf_path)
-    pages = []
-    current_chapter = "Introduction"
+def parse_article(path: Path) -> dict:
+    """Sépare l'en-tête YAML (titre, date) du corps de l'article."""
+    raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    match = re.match(r"^---\n(.*?)\n---\n(.*)$", raw, re.DOTALL)
+    if not match:
+        raise ValueError(f"En-tête manquant dans {path.name}")
+    header, body = match.groups()
 
-    for i, page in enumerate(doc):
-        text = page.get_text().strip()
-        if not text or len(text) < 10:
-            continue
+    def field(name: str) -> str:
+        found = re.search(rf'^{name}:\s*"(.*?)"\s*$', header, re.MULTILINE | re.DOTALL)
+        return found.group(1).strip() if found else ""
 
-        # Detect chapter headings
-        chapter_match = re.search(r"Chapter\s+\d+[:\s].+", text)
-        if chapter_match:
-            current_chapter = chapter_match.group(0).strip()
-
-        pages.append({
-            "text": text,
-            "page": i + 1,
-            "chapter": current_chapter,
-        })
-
-    doc.close()
-    return pages
+    return {
+        "slug": path.stem,
+        "title": field("title"),
+        "date": field("date"),
+        "body": body.strip(),
+    }
 
 
-def chunk_pages(pages: list[dict]) -> list[dict]:
-    """Split pages into overlapping chunks."""
-    chunks = []
+def chunk_article(article: dict) -> list[dict]:
+    """Regroupe les paragraphes en passages d'au plus CHUNK_SIZE caractères."""
+    paragraphs = [p.strip() for p in re.split(r"\n\s*\n", article["body"]) if p.strip()]
+    passages: list[str] = []
+    current = ""
+    for paragraph in paragraphs:
+        if current and len(current) + len(paragraph) > CHUNK_SIZE:
+            passages.append(current)
+            current = paragraph
+        else:
+            current = f"{current}\n\n{paragraph}" if current else paragraph
+    if current:
+        passages.append(current)
 
-    for page_data in pages:
-        text = page_data["text"]
-        page = page_data["page"]
-        chapter = page_data["chapter"]
+    # Le titre est répété dans chaque passage : il porte souvent le sujet de l'article.
+    return [
+        {
+            "slug": article["slug"],
+            "title": article["title"],
+            "date": article["date"],
+            "text": f"{article['title']}\n\n{passage}",
+        }
+        for passage in passages
+    ]
 
-        # Split on paragraph boundaries first
-        paragraphs = re.split(r"\n\s*\n", text)
-        current_chunk = ""
 
-        for para in paragraphs:
-            para = para.strip()
-            if not para:
-                continue
+def embed(chunks: list[dict]) -> list[dict]:
+    api_key = os.environ.get("GOOGLE_AI_API_KEY")
+    if not api_key:
+        sys.exit("GOOGLE_AI_API_KEY n'est pas défini.")
+    client = genai.Client(api_key=api_key)
 
-            if len(current_chunk) + len(para) < CHUNK_SIZE:
-                current_chunk += ("\n\n" if current_chunk else "") + para
-            else:
-                if current_chunk:
-                    chunks.append({
-                        "text": current_chunk,
-                        "page": page,
-                        "chapter": chapter,
-                    })
-                # Start new chunk with overlap from previous
-                if len(current_chunk) > CHUNK_OVERLAP:
-                    overlap = current_chunk[-CHUNK_OVERLAP:]
-                    current_chunk = overlap + "\n\n" + para
-                else:
-                    current_chunk = para
-
-        if current_chunk and len(current_chunk) > 50:
-            chunks.append({
-                "text": current_chunk,
-                "page": page,
-                "chapter": chapter,
-            })
-
+    for start in range(0, len(chunks), BATCH_SIZE):
+        batch = chunks[start : start + BATCH_SIZE]
+        response = client.models.embed_content(
+            model=EMBEDDING_MODEL,
+            contents=[chunk["text"] for chunk in batch],
+        )
+        for chunk, embedding in zip(batch, response.embeddings):
+            chunk["embedding"] = embedding.values
+        print(f"  {min(start + BATCH_SIZE, len(chunks))}/{len(chunks)} passages")
+        time.sleep(0.5)  # reste sous la limite du palier gratuit
     return chunks
 
 
-def embed_chunks(chunks: list[dict], batch_size: int = 20) -> list[dict]:
-    """Embed all chunks using Gemini Embedding API."""
-    api_key = os.environ.get("GOOGLE_AI_API_KEY")
-    if not api_key:
-        print("ERROR: Set GOOGLE_AI_API_KEY environment variable")
-        sys.exit(1)
-
-    client = genai.Client(api_key=api_key)
-
-    results = []
-    total = len(chunks)
-
-    for i in range(0, total, batch_size):
-        batch = chunks[i : i + batch_size]
-        texts = [c["text"] for c in batch]
-
-        print(f"  Embedding batch {i // batch_size + 1}/{(total + batch_size - 1) // batch_size} ({len(texts)} chunks)...")
-
-        response = client.models.embed_content(
-            model=EMBEDDING_MODEL,
-            contents=texts,
-        )
-
-        for j, emb in enumerate(response.embeddings):
-            results.append({
-                "text": batch[j]["text"],
-                "embedding": emb.values,
-                "page": batch[j]["page"],
-                "chapter": batch[j]["chapter"],
-            })
-
-        # Respect rate limits
-        if i + batch_size < total:
-            time.sleep(0.5)
-
-    return results
+def project_2d(chunks: list[dict]) -> list[dict]:
+    """Projection PCA des embeddings, pour la carte affichée dans l'interface."""
+    matrix = np.array([chunk["embedding"] for chunk in chunks])
+    points = PCA(n_components=2).fit_transform(matrix)
+    return [
+        {
+            "x": round(float(x), 6),
+            "y": round(float(y), 6),
+            "slug": chunk["slug"],
+            "title": chunk["title"],
+        }
+        for chunk, (x, y) in zip(chunks, points)
+    ]
 
 
-def main():
-    print(f"[1/4] Reading PDF: {PDF_PATH}")
-    pages = extract_text_by_page(PDF_PATH)
-    print(f"       Found {len(pages)} pages with text")
+def main() -> None:
+    articles = [parse_article(path) for path in sorted(ARTICLES_DIR.glob("*.md"))]
+    chunks = [chunk for article in articles for chunk in chunk_article(article)]
+    print(f"{len(articles)} articles, {len(chunks)} passages")
 
-    print(f"[2/4] Chunking text (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
-    chunks = chunk_pages(pages)
-    print(f"       Created {len(chunks)} chunks")
+    chunks = embed(chunks)
 
-    print(f"[3/4] Embedding with Gemini {EMBEDDING_MODEL}")
-    embedded = embed_chunks(chunks)
-    print(f"       Embedded {len(embedded)} chunks")
-
-    print(f"[4/4] Saving to {OUTPUT_PATH}")
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(embedded, f, ensure_ascii=False)
-
-    file_size = os.path.getsize(OUTPUT_PATH) / 1024 / 1024
-    print(f"       Done! File size: {file_size:.1f} MB")
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(json.dumps(chunks, ensure_ascii=False), encoding="utf-8")
+    OUTPUT_2D.write_text(
+        json.dumps(project_2d(chunks), ensure_ascii=False), encoding="utf-8"
+    )
+    print(f"Écrit : {OUTPUT.relative_to(ROOT)}, {OUTPUT_2D.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
